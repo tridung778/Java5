@@ -18,10 +18,10 @@ public class Database {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                Product productA = new Product("DELL XPS", 2023, 6234.34, "");
-                Product productB = new Product("Macbook", 2024, 4324.234, "");
-                logger.info("insert data: " + ProductRepository.save(productA));
-                logger.info("insert data: " + ProductRepository.save(productB));
+//                Product productA = new Product("DELL XPS", 2023, 6234.34, "");
+//                Product productB = new Product("Macbook", 2024, 4324.234, "");
+//                logger.info("insert data: " + ProductRepository.save(productA));
+//                logger.info("insert data: " + ProductRepository.save(productB));
             }
         };
     }
