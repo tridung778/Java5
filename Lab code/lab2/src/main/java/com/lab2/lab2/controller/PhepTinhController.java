@@ -3,7 +3,6 @@ package com.lab2.lab2.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,15 +20,27 @@ public class PhepTinhController {
     }
 
     @GetMapping("/phep-tinh")
-    public String getPhepTinh(@RequestParam("a") int a, @RequestParam("b") int b, Model model) {
-        int kq = a  + b;
-        model.addAttribute("kq", kq);
-        return "form";
-    }
-
-    @PostMapping("/phep-tinh")
-    public String postPhepTinh(@RequestParam("a") int a, @RequestParam("b") int b, Model model) {
-        int kq = a  + b;
+    public String getPhepTinh(@RequestParam("a") int a, @RequestParam("b") int b, @RequestParam("operator") String operator, Model model) {
+        double kq = 0;
+        switch (operator) {
+            case "+":
+                kq = a + b;
+                break;
+            case "-":
+                kq = a - b;
+                break;
+            case "*":
+                kq = a * b;
+                break;
+            case "/":
+                if (b != 0) {
+                    kq = (double) a / b;
+                }
+                break;
+            default:
+                kq = 0;
+                break;
+        }
         model.addAttribute("kq", kq);
         return "form";
     }

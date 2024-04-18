@@ -5,8 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/phep-tinh" method="post">
+<form action="/phep-tinh" method="get">
     <input type="text" name="a">
+    <select name="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
     <input type="text" name="b">
     <button>Tinh</button>
 </form>
