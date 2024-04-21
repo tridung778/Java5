@@ -12,24 +12,24 @@ import java.util.List;
 @NoArgsConstructor
 public class Student {
 
-//    @NotBlank(message = "{NotBlank.student.name")
+    @NotBlank(message = "Vui lòng nhập tên")
     String name;
 
-//    @NotBlank(message = "{NotBlank.student.email")
+    @NotBlank(message = "Vui lòng nhập email")
     String email;
 
-//    @Min(value = 1, message = "{Min.student.marks}")
-//    @Max(value = 10, message = "{Max.student.marks}")
-//    @NotNull(message = "{NotBlank.student.marks}")
+    @Min(value = 0, message = "Điểm thấp nhất là 0")
+    @Max(value = 10, message = "Điểm cao nhất là 10")
+    @NotNull(message = "Điểm không được bỏ trống")
     Double marks;
 
-//    @NotNull(message = "{NotBlank.student.gender}")
+    @NotNull(message = "Giới tính không được bỏ trống")
     Boolean gender;
 
-//    @NotBlank(message = "{NotBlank.student.faculty}")
+    @NotBlank(message = "Chuyên ngành không được bỏ trống")
     String faculty;
 
-//    @NotEmpty(message = "{NotEmpty.student.hobbies}")
+    @NotEmpty(message = "Sở thích không được bỏ trống")
     List<String> hobbies;
 
     String image;

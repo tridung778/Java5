@@ -9,22 +9,38 @@
 <body>
 <div th:if="${message}" th:text="${message}" style="display: none;" id="alertMessage"></div>
 <form th:action="@{/save}" th:object="${student}" method="post" enctype="multipart/form-data">
+    <label>Name: </label>
     <input type="text" th:field="*{name}">
+    <label class="text-danger" th:errors="*{name}" th:text="${errorMessage}"></label>
     <br>
+    <label>Email: </label>
     <input type="text" th:field="*{email}">
+    <label class="text-danger" th:errors="*{email}" th:text="${errorMessage}"></label>
     <br>
+    <label>Mark: </label>
     <input type="text" th:field="*{marks}">
+    <label class="text-danger" th:errors="*{marks}" th:text="${errorMessage}"></label>
     <br>
+    <label>Gender: </label>
     <input type="radio" th:field="*{gender}" value="true"> Male
     <input type="radio" th:field="*{gender}" value="false"> Female
-    <select class="form-control">
+    <label class="text-danger" th:errors="*{gender}" th:text="${errorMessage}"></label>
+    <br>
+    <label>Faculty: </label>
+    <select class="form-control" name="faculty">
         <option th:each="faculty: ${faculties}" th:value="${faculty}" th:text="${faculty}"></option>
     </select>
+    <label class="text-danger" th:errors="*{faculty}" th:text="${errorMessage}"></label>
+    <label>Hobbies: </label>
+    <label class="text-danger" th:errors="*{hobbies}" th:text="${errorMessage}"></label>
     <div th:each="entry : ${hobbies}">
-        <input type="checkbox" th:id="'hobby_' + ${entry.key}" th:name="'hobbies'" th:value="${entry.key}">
+        <input type="checkbox" th:id="'hobby_' + ${entry.key}" th:name="hobbies" th:value="${entry.key}">
         <label th:for="'hobby_' + ${entry.key}" th:text="${entry.value}"></label><br>
     </div>
+    <br>
+    <label>Photo: </label>
     <input type="file" name="photo-file">
+    <br>
     <button type="submit">Save</button>
 </form>
 <script th:if="${message}">

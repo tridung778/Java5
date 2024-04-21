@@ -21,10 +21,7 @@ import java.util.Map;
 @Controller
 public class StudentController {
 
-    public final static String path = "C:/Java 5/Lab code/lab3/src/main/resources/images/";
-
-    @Autowired
-    ServletContext app;
+    public final static String path = "C:\\Java 5\\Lab code\\lab3\\src\\main\\resources\\static\\images\\";
 
     @RequestMapping("")
     public String form(@ModelAttribute("student") Student student, Model model) {
@@ -32,7 +29,7 @@ public class StudentController {
 //        student.setEmail("dung@gmail.com");
 //        student.setMarks(10.0);
 //        student.setGender(true);
-//        student.setFaculty("CNTT");
+//        student.setFaculty("QLKS");
         model.addAttribute("student", student);
         return "student-form";
     }
@@ -43,30 +40,27 @@ public class StudentController {
             List<FieldError> errors = bindingResult.getFieldErrors();
             for (FieldError error : errors) {
                 String errorMessage = error.getDefaultMessage();
-                model.addAttribute("message", errorMessage);
+                model.addAttribute("errorMessage", errorMessage);
             }
             return "student-form";
-        } else {
-            if (!photoFile.isEmpty()) {
-                String fileName = photoFile.getOriginalFilename();
-                String uploadDir = app.getRealPath(path); // Lấy đường dẫn thực tế
-                File uploadPath = new File(uploadDir);
-                if (!uploadPath.exists()) {
-                    uploadPath.mkdirs(); // Tạo thư mục nếu không tồn tại
-                }
-                File file = new File(uploadPath, fileName);
-                photoFile.transferTo(file); // Lưu trữ tệp tin được tải lên
-                student.setImage(fileName);
-                model.addAttribute("student", student);
-                model.addAttribute("message", "Chuc mung ban da nhap dung");
+        }else if (!photoFile.isEmpty()) {
+            String fileName = photoFile.getOriginalFilename();
+            File file = new File(path + fileName);
+            if (!file.exists()) {
+                file.mkdirs();
             }
-            return "student-form";
+            photoFile.transferTo(file);
+            student.setImage(fileName);
+            model.addAttribute("student", student);
+            model.addAttribute("message", "Chuc mung ban da nhap dung");
         }
+
+        return "student-result";
     }
 
 
     @ModelAttribute("genders")
-    public Map<Boolean, String> getGenders(){
+    public Map<Boolean, String> getGenders() {
         Map<Boolean, String> map = new HashMap<>();
         map.put(true, "Male");
         map.put(false, "Female");
@@ -75,11 +69,11 @@ public class StudentController {
 
     @ModelAttribute("faculties")
     public List<String> getFaculties(Model model) {
-        return Arrays.asList("CNTT", "QLKS","KMT");
+        return Arrays.asList("CNTT", "QLKS", "KMT");
     }
 
     @ModelAttribute("hobbies")
-    public Map<String, String > getHobbies(){
+    public Map<String, String> getHobbies() {
         Map<String, String> map = new HashMap<>();
         map.put("T", "Travelling");
         map.put("M", "Music");
