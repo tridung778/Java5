@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ol class="w-50 me-auto ms-auto mt-3 list-group list-group-numbered">
+    <li th:each="item: ${items}" class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold" th:text="${item.name}"></div>
+            <span th:text="${item.price}"></span>
+        </div>
+        <span class="badge rounded-pill">
+		    	<a th:href="/cart/add/${item.id}"><i class="bi bi-bag-plus-fill"></i></a>
+		    </span>
+    </li>
+</ol>
+<div class="w-50 me-auto ms-auto mt-3">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c: ${cart}">
+            <th scope="row">${c.id}</th>
+            <td th:text="${c.name}"></td>
+            <td th:text="${c.price}"></td>
+            <td class="w-25"><input class="w-50" th:id="${c.id}input" th:value="${c.qty}"
+                                    th:onblur="updateQty('${c.id}')" type="number" min="1"/></td>
+            <td th:text="${c.qty * c.price}"></td>
+            <td><a th:href="/cart/remove/${c.id}" class="text-danger"><i class="bi bi-trash"></i></a></td>
+        </tr>
+        <h1>Tổng Tiền: <span th:text="${tongtien}"></span></h1>
+        </tbody>
+    </table>
+    <a th:href="/cart/clear">
+        <button type="button" class="float-end btn btn-danger">Clear</button>
+    </a>
+</div>
+<script type="text/javascript">
+    function updateQty(id) {
+        location.href = "/cart/update?id=" + id + "&qty=" + document.getElementById(id + "input").value;
+    }
+</script>
+</body>
+</html>
