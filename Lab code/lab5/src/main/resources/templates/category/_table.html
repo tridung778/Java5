@@ -1,0 +1,20 @@
+<table class="table table-light table-hover" th:fragment="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">NAME</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item: ${categories}">
+        <th scope="row" th:text="${item.id}"></th>
+        <td th:text="${item.name}"></td>
+        <td class="text-right">
+            <a class="btn btn-primary mr-2" th:href="${'/category/edit/'+item.id }" role="button">></a>
+            <a class="btn btn-danger mr-2" th:href="${'/category/delete/'+item.id }" role="button"><i
+                    class="fas fa-times-circle"></i></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
