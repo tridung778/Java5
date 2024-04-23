@@ -14,11 +14,11 @@
     <label class="text-danger" th:errors="*{name}" th:text="${errorMessage}"></label>
     <br>
     <label>Email: </label>
-    <input type="text" th:field="*{email}">
+    <input type="email" th:field="*{email}">
     <label class="text-danger" th:errors="*{email}" th:text="${errorMessage}"></label>
     <br>
     <label>Mark: </label>
-    <input type="text" th:field="*{marks}">
+    <input type="number" th:field="*{marks}">
     <label class="text-danger" th:errors="*{marks}" th:text="${errorMessage}"></label>
     <br>
     <label>Gender: </label>
