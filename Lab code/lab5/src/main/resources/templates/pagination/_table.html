@@ -1,0 +1,33 @@
+<table class="table table-light table-hover" th:fragment="table">
+    <thead>
+    <tr>
+        <th scope="col"><a href="/product/sort?field=id">ID</a></th>
+        <th scope="col"><a href="/product/sort?field=name">NAME</a></th>
+        <th scope="col"><a href="/product/sort?field=price">PRICE</a></th>
+        <th scope="col"><a href="/product/sort?field=createDate">DATE</a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item: ${page.content}">
+        <th scope="row" th:text="${item.id}"></th>
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.price}"></td>
+        <td th:text="${item.createDate}"></td>
+    </tr>
+    </tbody>
+</table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="/product/page?page=0">First</a></li>
+        <li class="page-item"><a class="page-link" th:href="${'/product/page?page='+page.number -1 }">Previous</a></li>
+        <li class="page-item"><a class="page-link" th:href="${'/product/page?page='+page.number +1 }">Next</a></li>
+        <li class="page-item"><a class="page-link" th:href="${'/product/page?page='+page.totalPages -1 }">Last</a></li>
+    </ul>
+</nav>
+<ul class="list-group">
+    <li class="list-group-item">Số thực thể hiện tại: <span th:text="${page.numberOfElements}"></span></li>
+    <li class="list-group-item">Trang số: <span th:text="${page.number}"></span></li>
+    <li class="list-group-item">Kích thước trang: <span th:text="${page.size}"></span></li>
+    <li class="list-group-item">Tổng số thực thể: <span th:text="${page.totalElements}"></span></li>
+    <li class="list-group-item">Tổng số trang: <span th:text="${page.totalPages}"></span></li>
+</ul>

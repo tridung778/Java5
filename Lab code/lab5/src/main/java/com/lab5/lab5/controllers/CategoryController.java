@@ -19,6 +19,7 @@ public class CategoryController {
     CategoryDAO dao;
     @Autowired
     ParamService paramService;
+
     @RequestMapping("/")
     public String index() {
         return "index";
@@ -30,7 +31,7 @@ public class CategoryController {
         model.addAttribute("category", category);
         List<Category> categories = dao.findAll();
         model.addAttribute("categories", categories);
-        return "category/indexCategory";
+        return "/category/index";
     }
 
     @RequestMapping("/category/edit/{id}")
@@ -39,24 +40,24 @@ public class CategoryController {
         model.addAttribute("category", category);
         List<Category> categories = dao.findAll();
         model.addAttribute("categories", categories);
-        return "category/indexCategory";
+        return "/category/index";
     }
 
     @PostMapping("/category/create")
     public String create(Category category) {
         dao.save(category);
-        return "redirect:index";
+        return "redirect:/category/index";
     }
 
     @PostMapping("/category/update")
     public String update(Category category) {
         dao.save(category);
-        return "redirect:edit/" + category.getId();
+        return "redirect:/category/edit/" + category.getId();
     }
 
     @GetMapping("/category/delete/{id}")
     public String delete(@PathVariable("id") String id) {
         dao.deleteById(id);
-        return "redirect:index";
+        return "redirect:/category/index";
     }
 }

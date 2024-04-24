@@ -1,0 +1,18 @@
+<table class="table table-light table-hover" th:fragment="table">
+    <thead>
+    <tr>
+        <th scope="col"><a href="/product/sort?field=id">ID</a></th>
+        <th scope="col"><a href="/product/sort?field=name">NAME</a></th>
+        <th scope="col"><a href="/product/sort?field=price">PRICE</a></th>
+        <th scope="col"><a href="/product/sort?field=createDate">DATE</a></th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="item: ${products}">
+            <th scope="row" th:text="${item.id}"></th>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.createDate}"></td>
+        </tr>
+    </tbody>
+</table>
