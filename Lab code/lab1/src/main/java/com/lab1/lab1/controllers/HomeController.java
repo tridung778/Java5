@@ -40,7 +40,7 @@ public class HomeController {
         String userName = request.getParameter("userName");
         String passWord = request.getParameter("passWord");
 
-        if (userName.isEmpty() || passWord.isEmpty()){
+        if (userName.isEmpty() || passWord.isEmpty()) {
             return "login";
         } else {
             Account account = new Account();
