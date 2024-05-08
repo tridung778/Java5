@@ -1,0 +1,89 @@
+.tav li:hover {
+	background: rgb(192, 192, 192);
+}
+
+.tav li {
+	padding: 8px;
+}
+
+.tav .nav-item .nav-link {
+	padding-left: 30px;
+	border-top: 1px solid #e5e5e5;
+}
+
+footer {
+	position: relative;
+	margin-top: 20px;
+}
+
+.item .card {
+	margin: 10px;
+	overflow: hidden;
+}
+
+.item .card:hover {
+	cursor: pointer;
+}
+
+.card img {
+	transition: transform 0.7s;
+	overflow: hidden;
+}
+
+.card:hover img {
+	-ms-transform: scale(1.4); /* IE 9 */
+	-webkit-transform: scale(1.2); /* Safari 3-8 */
+	transform: scale(1.2);
+}
+
+.feed {
+    width: 350px;
+    border: none;
+    border-radius: 12px;
+}
+
+.circle-image img {
+    border: 6px solid #fff;
+    border-radius: 100%;
+    padding: 9px;
+    top: -28px;
+    position: relative;
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+    z-index: 1;
+    background: #e7d184;
+    cursor: pointer;
+}
+
+.help-text {
+    margin-top: -21px;
+}
+
+.thumb {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    font-size: 19px;
+    border: 1px solid #bbb;
+    line-height: 37px;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+.thumbs-up:hover {
+    color: #fff;
+    background-color: green;
+    border: 1px solid green;
+}
+
+.thumbs-down:hover {
+    color: #fff;
+    background-color: red;
+    border: 1px solid red;
+}

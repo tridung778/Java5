@@ -11,6 +11,18 @@
     <title>Title</title>
 </head>
 <body>
-
+<form action="/result" method="post">
+    <label>
+        UserName
+        <input type="text" name="userName">
+    </label>
+    <br>
+    <label>
+        PassWord
+        <input type="text" name="passWord">
+    </label>
+    <br>
+    <button>Login</button>
+</form>
 </body>
 </html>
