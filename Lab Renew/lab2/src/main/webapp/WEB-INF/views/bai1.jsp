@@ -13,11 +13,11 @@
 <body>
 
 <form action="/ctrl/ok" method="post">
-    <button formaction="/bai11" >OK1 ${ok1}</button>
-    <button formaction="/bai22">OK2 ${ok2}</button>
-    <button formaction="/bai33">OK3 ${ok3}</button>
+    <button formaction="/bai1-lab1" >OK1 ${ok1}</button>
+    <button formaction="/bai2-lab1">OK2 ${ok2}</button>
+    <button formaction="/bai3-lab1">OK3 ${ok3}</button>
 </form>
-<h1>${ok}</h1>
+<h1>Button: ${ok}</h1>
 
 
 <a href="/">trang chu </a>

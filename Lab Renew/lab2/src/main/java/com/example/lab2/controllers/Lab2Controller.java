@@ -29,23 +29,23 @@ public class Lab2Controller {
     }
 
 
-    @RequestMapping(value = "/bai11")
+    @RequestMapping(value = "/bai1-lab1")
     public String bai1(Model model) {
-        model.addAttribute("ok", "button 1");
+        model.addAttribute("ok", "1");
         return "bai1";
         //return "forward:/bai1";
     }
 
-    @RequestMapping(value = "/bai22")
+    @RequestMapping(value = "/bai2-lab1")
     public String bai2(Model model) {
-        model.addAttribute("ok", "button 2");
+        model.addAttribute("ok", "2");
         return "bai1";
         //return "forward:/bai1";
     }
 
-    @RequestMapping(value = "/bai33")
+    @RequestMapping(value = "/bai3-lab1")
     public String bai3(Model model) {
-        model.addAttribute("ok", "button 3");
+        model.addAttribute("ok", "3");
         return "bai1";
         //return "forward:/bai1";
     }
@@ -127,7 +127,7 @@ public class Lab2Controller {
 
     @GetMapping("/bai5/forward")
     public String bai5_forward(Model model) {
-        model.addAttribute("message", "forwardanhtu");
+        model.addAttribute("message", "forward");
         return "forward:/bai5";
         //return "bai5";
     }
