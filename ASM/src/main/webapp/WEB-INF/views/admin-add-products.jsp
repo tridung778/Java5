@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: duong
@@ -11,47 +13,70 @@
         <div class="fs-3 second-text">
             Products
         </div>
-        <a class="btn btn-success">Add product</a>
     </div>
-    <form class="row mt-3 p-2 secondary-bg">
+    <form:form class="row mt-3 p-2 secondary-bg" action="/admin/add-products/save" method="post"
+               modelAttribute="product"
+               enctype="multipart/form-data">
+        <form:input type="hidden" path="id"/>
         <div class="col-md-6 second-text">
             <label for="inputEmail4" class="form-label">Name</label>
-            <input type="text" class="form-control " id="inputEmail4">
+            <form:input type="text" class="form-control " id="inputEmail4" path="name"/>
         </div>
         <div class="col-md-6 second-text">
             <label for="inputPassword4" class="form-label">Price</label>
-            <input type="number" class="form-control" id="inputPassword4">
+            <form:input type="number" class="form-control" id="inputPassword4" path="price"/>
         </div>
         <div class="col-6 second-text">
             <label for="inputAddress" class="form-label">Quantity</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+            <form:input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" path="quantity"/>
         </div>
         <div class="col-6 second-text">
             <label for="inputState" class="form-label">Type</label>
-            <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>...</option>
-            </select>
+            <form:select id="inputState" class="form-select" path="type">
+                <form:option value="Ao">Ao</form:option>
+                <form:option value="Quan">Quan</form:option>
+            </form:select>
         </div>
         <div class="col-12 second-text">
-            <label for="inputAddress" class="form-label">Describe</label>
-            <div class="input-group">
-                <textarea class="form-control" aria-label="With textarea"></textarea>
-            </div>
+            <label for="inputDescription" class="form-label">Description</label>
+            <form:textarea id="inputDescription" class="form-control" aria-label="With textarea" path="description"/>
         </div>
         <div class="col-12 second-text">
             <label for="inputAddress" class="form-label">Thumbnail</label>
             <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile01">
+                <form:input type="file" class="form-control" id="inputGroupFile01" name="thumbnail" path="thumbnail"
+                            style="display:none"/>
+                <c:choose>
+                    <c:when test="${product.thumbnail == null}">
+                        <label for="inputGroupFile01" id="file-label" class="btn btn-success">Chon anh</label>
+                    </c:when>
+                    <c:otherwise>
+                        <label for="inputGroupFile01" id="file-label"
+                               class="btn btn-success">${product.thumbnail}</label>
+                    </c:otherwise>
+                </c:choose>
+
             </div>
         </div>
-    </form>
+        <button type="submit" class="btn btn-success">Add product</button>
+    </form:form>
     <div class="mt-4 d-flex justify-content-between align-items-center">
         <nav class="navbar">
             <div class="container-fluid">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-danger" type="submit">Search</button>
+                <form class="d-flex secondary-bg m-3" role="search"action="/admin/add-products/search" method="GET">
+                    <div class="input-group mb-3 p-3 pb-1">
+                        <label class="second-text" style="display:flex;flex-direction: row;">
+                            <input class="form-control me-2" autocomplete="off" style="border: var(--third-text-color)"
+                                   list="name-product"
+                                   name="name-product">
+                            <button type="submit" class="btn btn-outline-success">Search</button>
+                        </label>
+                        <datalist id="name-product">
+                            <c:forEach items="${products}" var="product">
+                                <option value="${product.name}"></option>
+                            </c:forEach>
+                        </datalist>
+                    </div>
                 </form>
             </div>
         </nav>
@@ -81,15 +106,30 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
+            <c:forEach items="${products}" var="product">
+                <tr>
+                    <th scope="row">
+                        <img src="${pageContext.request.contextPath}/images/${product.thumbnail}"
+                             width="100px" height="100px" alt="">
+                    </th>
+                    <td>${product.name}</td>
+                    <td>${product.type}</td>
+                    <td>${product.price}</td>
+                    <td>${product.quantity}</td>
+                    <td>
+                        <a href="/admin/add-products/remove/${product.id}" class="btn btn-outline-danger">Delete</a>
+                        <a href="/admin/add-products/edit/${product.id}" class="btn btn-outline-success">Edit</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>
 </div>
+<script>
+    document.getElementById('inputGroupFile01').addEventListener('change', function () {
+        var fileName = this.value.split('\\').pop();
+        document.getElementById('file-label').textContent = fileName || 'Chọn ảnh';
+    });
+
+</script>

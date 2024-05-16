@@ -1,33 +1,37 @@
 package com.example.ASM.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
-@Entity
-@Table(name = "product")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @GeneratedValue(strategy= GenerationType.UUID)
+    private UUID id;
     private String description;
     private double price;
     private int quantity;
     private String name;
-    private String color;
-    private String size;
-    private String brand;
-    private int sold;
+    private String type;
+    private String thumbnail;
 
-    @ManyToOne
-    @JoinColumn(name = "product_category_id")
-    private ProductCategory category;
-
-    @ManyToOne
-    @JoinColumn(name = "collection_id")
-    private Collection collection;
-
+    public Product(String description, double price, int quantity, String name, String type, String thumbnail) {
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.name = name;
+        this.type = type;
+        this.thumbnail = thumbnail;
+    }
 }
