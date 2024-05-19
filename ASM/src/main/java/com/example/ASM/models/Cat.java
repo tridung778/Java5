@@ -8,16 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Product {
+public class Cat {
     @Id
-    @GeneratedValue(strategy= GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String description;
     private double price;
@@ -25,13 +24,15 @@ public class Product {
     private String name;
     private String type;
     private String thumbnail;
+    private String specie;
 
-    public Product(String description, double price, int quantity, String name, String type, String thumbnail) {
+    public Cat(String description, double price, int quantity, String name, String type, String thumbnail, String specie) {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
         this.name = name;
         this.type = type;
         this.thumbnail = thumbnail;
+        this.specie = specie;
     }
 }

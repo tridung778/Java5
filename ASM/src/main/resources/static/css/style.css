@@ -1,0 +1,18 @@
+.navbar-custom {
+    justify-content: center;
+}
+.navbar-nav {
+    flex-direction: row;
+}
+.nav-item {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.search-input {
+    width: 500px;
+}
+
+.carousel-item img{
+    max-width: 100%;
+    max-height: 500px;
+}
