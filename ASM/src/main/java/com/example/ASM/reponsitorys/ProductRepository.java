@@ -1,12 +1,14 @@
 package com.example.ASM.reponsitorys;
 
-import com.example.ASM.models.Cat;
+import com.example.ASM.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Cat, UUID>{
-    Cat findByNameContainingIgnoreCase(String name);
+public interface ProductRepository extends JpaRepository<Product, UUID>{
+    Product findByNameContainingIgnoreCase(String name);
+    List<Product> findByTypeContainingIgnoreCase(String type);
 }

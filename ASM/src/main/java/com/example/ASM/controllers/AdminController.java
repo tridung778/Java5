@@ -1,7 +1,7 @@
 package com.example.ASM.controllers;
 
 import com.example.ASM.dto.ProductDto;
-import com.example.ASM.models.Cat;
+import com.example.ASM.models.Product;
 import com.example.ASM.reponsitorys.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class AdminController {
     private ProductRepository productRepository;
 
     @GetMapping("/")
-    public String addProducts(Model model, @ModelAttribute("product") Cat product) {
+    public String addProducts(Model model, @ModelAttribute("product") Product product) {
         model.addAttribute("products", productRepository.findAll());
         model.addAttribute("page", "admin-add-products.jsp");
         return "admin-page";
@@ -39,7 +39,7 @@ public class AdminController {
             return "admin-page";
         }
 
-        Cat product = new Cat();
+        Product product = new Product();
 
         if (productDto.getId() != null) {
             product = productRepository.findById(productDto.getId()).orElse(null);
@@ -77,8 +77,8 @@ public class AdminController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editProduct(@PathVariable("id") UUID id, Model model, @ModelAttribute("product") Cat product) {
-        Cat existingProduct = productRepository.findById(id).orElse(null);
+    public String editProduct(@PathVariable("id") UUID id, Model model, @ModelAttribute("product") Product product) {
+        Product existingProduct = productRepository.findById(id).orElse(null);
         if (existingProduct != null) {
             model.addAttribute("product", existingProduct);
         } else {
@@ -90,8 +90,8 @@ public class AdminController {
     }
 
     @GetMapping("/search")
-    public String searchProducts(@RequestParam("name-product") String name, Model model, @ModelAttribute("product") Cat product) {
-        Cat searchResults = productRepository.findByNameContainingIgnoreCase(name);
+    public String searchProducts(@RequestParam("name-product") String name, Model model, @ModelAttribute("product") Product product) {
+        Product searchResults = productRepository.findByNameContainingIgnoreCase(name);
         model.addAttribute("product", searchResults);
         model.addAttribute("products", productRepository.findAll());
         model.addAttribute("page", "admin-add-products.jsp");

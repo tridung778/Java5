@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: duong
@@ -10,17 +11,22 @@
 <%--Banner --%>
 <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="10000">
-            <img src="https://i1.wp.com/pet-care.co.za/wp-content/uploads/2018/07/Pet-Care-Banner.jpg?ssl=1"
+        <div class="carousel-item active" data-bs-interval="3000">
+            <img src="https://mauweb.monamedia.net/petcare/wp-content/uploads/2019/10/slider-shop-1.jpg"
                  class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h1>TD Pet</h1>
+                <p>Sen ơi, vào đây mà xem!</p>
+            </div>
         </div>
         <div class="carousel-item" data-bs-interval="2000">
-            <img src="https://static.vecteezy.com/system/resources/previews/007/301/665/non_2x/pet-shop-banner-design-template-cartoon-illustration-of-cats-dogs-house-food-vector.jpg"
+            <img src="https://mauweb.monamedia.net/petcare/wp-content/uploads/2019/10/slider-shop-2.jpg"
                  class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/four-happy-cats-website-banner-susan-schmitz.jpg"
-                 class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h1>Uy tín</h1>
+                <p>Uy tín đã được kiểm chứng, chất lượng đã được khẳng định - TD Pet luôn là lựa chọn tốt nhất cho thú
+                    cưng của bạn.</p>
+            </div>
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
@@ -32,37 +38,125 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-
-<%-- Cat conponent--%>
-<div class="container bg-primary mt-5">
+<%-- Home Component--%>
+<div class="cards ms-1 mt-5 d-flex w-100 justify-content-center">
+    <div class="card red mx-5 row">
+        <div class="col-3 ">
+            <i class="fa-solid fa-truck fs-1"></i>
+        </div>
+        <div class="col-9">
+            <p class="tip">Nhận Giao Hàng</p>
+            <p class="second-text">Giao thú cưng toàn các tỉnh Tây Nam Bộ, giao trong ngày tại Tp.HCM. Giao phụ kiện, đồ
+                dùng toàn quốc.<span class="invisible">Nhận Giao Hàng</span></p>
+        </div>
+    </div>
+    <div class="card blue mx-5 row">
+        <div class="col-3 ">
+            <i class="fa-solid fa-piggy-bank fs-1"></i>
+        </div>
+        <div class="col-9">
+            <p class="tip">Giá Cả Hợp Lý</p>
+            <p class="second-text">Sản phẩm đa dạng chủng loại và giá cả. Có Bảo hành với các loại thú cưng giá trị cao.
+                Chất lượng uy tín chi phí cạnh tranh.</p>
+        </div>
+    </div>
+    <div class="card green mx-5 row">
+        <div class="col-3 ">
+            <i class="fa-solid fa-ticket fs-1"></i>
+        </div>
+        <div class="col-9">
+            <p class="tip">Ngập Tràn Khuyến Mãi</p>
+            <p class="second-text">Chế độ hậu mãi hấp dẫn. Với nhiều chương trình chăm sóc khách hàng thân thiết với rất
+                nhiều ưu đãi và khuyến mại.<span class="invisible">Ngập Tràn Khuyến Mãi</span></p>
+        </div>
+    </div>
+</div>
+<%-- Cat Component--%>
+<div class="container bg-primary mt-5 rounded">
     <div class="text-light d-flex justify-content-between align-items-center">
         <h1>Mèo</h1>
-        <a>Xem tất cả ></a>
+        <a href="${pageContext.request.contextPath}/product?typeProduct=cat" class="text-light text-decoration-none">Xem tất cả ></a>
     </div>
     <hr>
     <div class="row">
-        <c:forEach items="${cats}" var="cat">
-
-
-            <div class="col-md-3 mb-3">
-                <div class="card">
-                    <img src="/images/${cat.thumbnail}"
-                         class="card-img-top"
-                         alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${cat.specie}</h5>
-                        <p class="card-text">
-                                ${cat.name}</p>
-                        <p class="text-danger">
-                                ${cat.price} đ
-                        </p>
-                        <form method="post" action="/addToCart/${cat.id}">
-                            <input type="hidden" name="quantity" value="1"> <!-- Mặc định số lượng là 1 -->
-                            <button type="submit" class="btn border-primary d-flex justify-content-center">Thêm vào giỏ hàng</button>
-                        </form>
+        <c:forEach items="${products}" var="product" varStatus="status">
+            <c:if test="${status.count <= 8}">
+                <c:if test="${product.type == 'cat'}">
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <img src="/images/${product.thumbnail}"
+                                 class="card-img-top"
+                                 alt="...">
+                            <div class="card-body">
+                                <div class="rainbow-text">
+                                    <span>Mã: ${product.code}</span>
+                                </div>
+                                <h5 class="card-title">${product.specie}</h5>
+                                <p class="card-text">
+                                        ${product.name}</p>
+                                <p class="card-text">
+                                        ${product.description}</p>
+                                <p class="text-danger">
+                                    <fmt:formatNumber value="${product.price}"/> đ
+                                </p>
+                                <form method="post" action="/addToCart/${product.id}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn border-primary d-flex justify-content-center">Thêm
+                                        vào
+                                        giỏ
+                                        hàng
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </c:if>
+            </c:if>
+        </c:forEach>
+    </div>
+</div>
+
+<%-- Dog Component--%>
+<div class="container bg-danger mt-5 rounded">
+    <div class="text-light d-flex justify-content-between align-items-center">
+        <h1>Chó</h1>
+        <a href="${pageContext.request.contextPath}/product?typeProduct=dog" class="text-light text-decoration-none">Xem tất cả ></a>
+    </div>
+    <hr>
+    <div class="row">
+        <c:forEach items="${products}" var="product" varStatus="status">
+            <c:if test="${status.count <= 8}">
+                <c:if test="${product.type == 'dog'}">
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <img src="/images/${product.thumbnail}"
+                                 class="card-img-top"
+                                 alt="...">
+                            <div class="card-body">
+                                <div class="rainbow-text">
+                                    <span>Mã: ${product.code}</span>
+                                </div>
+                                <h5 class="card-title">${product.specie}</h5>
+                                <p class="card-text">
+                                        ${product.name}</p>
+                                <p class="card-text">
+                                        ${product.description}</p>
+                                <p class="text-danger">
+                                    <fmt:formatNumber value="${product.price}"/> đ
+                                </p>
+                                <form method="post" action="/addToCart/${product.id}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn border-primary d-flex justify-content-center">Thêm
+                                        vào
+                                        giỏ
+                                        hàng
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
+            </c:if>
         </c:forEach>
     </div>
 </div>

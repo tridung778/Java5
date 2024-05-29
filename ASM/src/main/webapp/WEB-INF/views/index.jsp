@@ -15,7 +15,11 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/gh/eliyantosarage/font-awesome-pro@main/fontawesome-pro-6.5.2-web/css/all.min.css"
           rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css"/>
     <title>Title</title>
 </head>
 <body>
@@ -23,7 +27,9 @@
 <header>
     <jsp:include page="header.jsp"/>
 </header>
+<main class="main-background" style="padding-bottom: 50px;padding-top: 70px">
     <jsp:include page="${router}"/>
+</main>
 <footer>
     <jsp:include page="footer.jsp"/>
 </footer>

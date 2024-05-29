@@ -10,8 +10,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container navbar-custom">
             <a class="navbar-brand" href="/">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Z4xzMxefMiW9QeTmOXWTSNy759u3pOaVKEs9grCrhw&s"
-                     alt="Bootstrap" width="30" height="24">
+                <img src="${pageContext.request.contextPath}/images/td-pet-logo-zip-file/png/logo-no-background.png"
+                     alt="Bootstrap" height="30">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -45,13 +45,15 @@
                             <img src="https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg"
                                  class="rounded-circle" alt="" width="30" height="30">
                         </div>
-                        <div class="d-flex flex-column ms-2">
-                            <span>Đăng nhập</span>
-                            <span>Đăng ký</span>
-                        </div>
+                        <a class="text-decoration-none text-dark" href="${pageContext.request.contextPath}/login">
+                            <div class="d-flex  flex-column ms-2">
+                                <span>Đăng nhập</span>
+                                <span>Đăng ký</span>
+                            </div>
+                        </a>
                     </div>
                     <a href="/openCart" class="d-flex text-dark text-decoration-none">
-                        <i class="fa-regular fa-cart-shopping fs-3 mt-2"></i>
+                        <i class="fa fa-cart-shopping fs-3 mt-2"></i>
                         <div class="d-flex flex-column ms-2">
                             <span>Giỏ hàng của bạn</span>
                             <span>${animalIndex} sản phẩm</span>

@@ -1,23 +1,20 @@
 package com.example.ASM.services;
 
-import com.example.ASM.models.Cat;
-import org.springframework.stereotype.Service;
+import com.example.ASM.models.Product;
 
-import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-@Service
+
 public interface ProductService {
-    Cat add(Long id);
 
-    Cat update(Long id);
+    List<Product> findAll();
 
-    void remove(Long id);
+    List<Product> findByTypeContainingIgnoreCase(String type);
 
-    void clear();
+    Optional<Product> findById(UUID id);
 
-    Collection<Cat> getItems();
+    Product save(Product product);
 
-    int getCount();
-
-    double getAmount();
 }

@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cat {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -25,8 +25,9 @@ public class Cat {
     private String type;
     private String thumbnail;
     private String specie;
+    private String code;
 
-    public Cat(String description, double price, int quantity, String name, String type, String thumbnail, String specie) {
+    public Product(String description, double price, int quantity, String name, String type, String thumbnail, String specie, String code) {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
@@ -34,5 +35,6 @@ public class Cat {
         this.type = type;
         this.thumbnail = thumbnail;
         this.specie = specie;
+        this.code = code;
     }
 }
