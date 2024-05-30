@@ -1,6 +1,6 @@
 package com.lab.lab5.controllers;
 
-import com.lab.lab5.repositorys.ProductRepository;
+import com.lab.lab5.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

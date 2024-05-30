@@ -1,7 +1,7 @@
 package com.example.ASM.services;
 
 import com.example.ASM.dto.CartDto;
-import com.example.ASM.reponsitorys.CartRepository;
+import com.example.ASM.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

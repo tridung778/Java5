@@ -1,8 +1,8 @@
 package com.lab.lab5.controllers;
 
 import com.lab.lab5.models.Category;
-import com.lab.lab5.repositorys.CategoryRepository;
-import com.lab.lab5.repositorys.ProductRepository;
+import com.lab.lab5.repositories.CategoryRepository;
+import com.lab.lab5.repositories.ProductRepository;
 import com.lab.lab5.ultils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,6 @@ public class CategoryController {
     public String category_index(Model model, @ModelAttribute("categoryItem") Category ca) {
         ca.setId(null);
         ca.setName(null);
-
 //        categoryRepository.findAll().forEach(System.out::println);
 //        System.out.println("ddd");
         model.addAttribute("categories", categoryRepository.findAll());
@@ -45,7 +44,6 @@ public class CategoryController {
                 model.addAttribute("message", Message.SUCCESS_CREATE);
             }
         } else {
-            // Nếu có lỗi validation, hiển thị thông báo lỗi chung
             model.addAttribute("message", Message.ERROR_VALIDATION);
         }
         model.addAttribute("categories", categoryRepository.findAll());

@@ -2,10 +2,10 @@ package com.example.ASM.controllers;
 
 import com.example.ASM.dto.CartDto;
 import com.example.ASM.models.Account;
+import com.example.ASM.models.PetCategory;
 import com.example.ASM.models.Product;
-import com.example.ASM.reponsitorys.CartRepository;
-import com.example.ASM.reponsitorys.ProductRepository;
 import com.example.ASM.services.CartService;
+import com.example.ASM.services.PetService;
 import com.example.ASM.services.ProductService;
 import com.example.ASM.ultis.XCookies;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,12 +14,9 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,25 +29,28 @@ public class HomeController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private PetService petService;
+
     int animalIndex;
 
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("products", productService.findAll());
-        model.addAttribute("animalIndex", animalIndex);
+        model.addAttribute("pets",  petService.findAllPet());
+//        model.addAttribute("animalIndex", animalIndex);
         model.addAttribute("router", "home.jsp");
         return "index";
     }
 
-    @RequestMapping("/product")
-    public String openCat(Model model, @RequestParam("typeProduct") String typeProduct) {
-        model.addAttribute("products", productService.findByTypeContainingIgnoreCase(typeProduct));
+    @RequestMapping("/pets")
+    public String openCat(Model model, @RequestParam("petCategory") String petCategory) {
+        model.addAttribute("pets", petService.findAllPetByCategory(petCategory));
         model.addAttribute("animalIndex", animalIndex);
         model.addAttribute("router", "listProducts.jsp");
-        if (typeProduct.equals("cat")) {
-            model.addAttribute("productName", "Mèo");
-        } else if (typeProduct.equals("dog")) {
-            model.addAttribute("productName", "Chó");
+        if (petCategory.equalsIgnoreCase("cat")) {
+            model.addAttribute("petName", "Mèo");
+        } else if (petCategory.equalsIgnoreCase("dog")) {
+            model.addAttribute("petName", "Chó");
         }
         return "index";
     }
@@ -95,10 +95,10 @@ public class HomeController {
     public String updateQuantity(@Validated @RequestParam("id") UUID id, @RequestParam("quantity") int quantity) {
 
         CartDto cart = cartService.findById(id).orElse(null);
-            if (cart != null) {
-                cart.setQuantity(quantity);
-                cartService.save(cart);
-            }
+        if (cart != null) {
+            cart.setQuantity(quantity);
+            cartService.save(cart);
+        }
 
         return "redirect:/openCart";
     }
@@ -161,7 +161,6 @@ public class HomeController {
 
         return "redirect:/";
     }
-
 
 
 }

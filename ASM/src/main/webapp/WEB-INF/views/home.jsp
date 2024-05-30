@@ -75,31 +75,35 @@
 <div class="container bg-primary mt-5 rounded">
     <div class="text-light d-flex justify-content-between align-items-center">
         <h1>Mèo</h1>
-        <a href="${pageContext.request.contextPath}/product?typeProduct=cat" class="text-light text-decoration-none">Xem tất cả ></a>
+        <a href="${pageContext.request.contextPath}/pets?petCategory=cat" class="text-light text-decoration-none">Xem
+            tất cả ></a>
     </div>
     <hr>
     <div class="row">
-        <c:forEach items="${products}" var="product" varStatus="status">
+        <c:forEach items="${pets}" var="pet" varStatus="status">
             <c:if test="${status.count <= 8}">
-                <c:if test="${product.type == 'cat'}">
+                <c:if test="${pet.category.name == 'Cat'}">
                     <div class="col-md-3 mb-3">
-                        <div class="card">
-                            <img src="/images/${product.thumbnail}"
+                        <div class="card ">
+                            <img src="/images/${pet.image}"
                                  class="card-img-top"
                                  alt="...">
-                            <div class="card-body">
-                                <div class="rainbow-text">
-                                    <span>Mã: ${product.code}</span>
+                            <div class="card-body d-flex justify-content-center align-items-center flex-column">
+                                <div class="d-flex flex-row">
+                                    <h5 class="card-title"> ${pet.name}</h5>
+                                    <c:if test="${pet.gender.toString() == 'MALE'}">
+                                        <i class="fa-solid fa-mars"></i>
+                                    </c:if>
+                                    <c:if test="${pet.gender.toString() == 'FEMALE'}">
+                                        <i class="fa-solid fa-venus"></i>
+                                    </c:if>
                                 </div>
-                                <h5 class="card-title">${product.specie}</h5>
                                 <p class="card-text">
-                                        ${product.name}</p>
-                                <p class="card-text">
-                                        ${product.description}</p>
+                                        ${pet.breed}</p>
                                 <p class="text-danger">
-                                    <fmt:formatNumber value="${product.price}"/> đ
+                                    <fmt:formatNumber value="${pet.price}"/> đ
                                 </p>
-                                <form method="post" action="/addToCart/${product.id}">
+                                <form method="post" action="/addToCart/${pet.id}">
                                     <input type="hidden" name="quantity" value="1">
                                     <button type="submit" class="btn border-primary d-flex justify-content-center">Thêm
                                         vào
@@ -120,31 +124,35 @@
 <div class="container bg-danger mt-5 rounded">
     <div class="text-light d-flex justify-content-between align-items-center">
         <h1>Chó</h1>
-        <a href="${pageContext.request.contextPath}/product?typeProduct=dog" class="text-light text-decoration-none">Xem tất cả ></a>
+        <a href="${pageContext.request.contextPath}/pets?petCategory=dog" class="text-light text-decoration-none">Xem
+            tất cả ></a>
     </div>
     <hr>
     <div class="row">
-        <c:forEach items="${products}" var="product" varStatus="status">
+        <c:forEach items="${pets}" var="pet" varStatus="status">
             <c:if test="${status.count <= 8}">
-                <c:if test="${product.type == 'dog'}">
+                <c:if test="${pet.category.name == 'Dog'}">
                     <div class="col-md-3 mb-3">
                         <div class="card">
-                            <img src="/images/${product.thumbnail}"
+                            <img src="/images/${pet.image}"
                                  class="card-img-top"
                                  alt="...">
-                            <div class="card-body">
-                                <div class="rainbow-text">
-                                    <span>Mã: ${product.code}</span>
+                            <div class="card-body d-flex justify-content-center align-items-center flex-column">
+                                <div class="d-flex flex-row">
+                                    <h5 class="card-title"> ${pet.name}</h5>
+                                    <c:if test="${pet.gender.toString() == 'MALE'}">
+                                        <i class="fa-solid fa-mars"></i>
+                                    </c:if>
+                                    <c:if test="${pet.gender.toString() == 'FEMALE'}">
+                                        <i class="fa-solid fa-venus"></i>
+                                    </c:if>
                                 </div>
-                                <h5 class="card-title">${product.specie}</h5>
                                 <p class="card-text">
-                                        ${product.name}</p>
-                                <p class="card-text">
-                                        ${product.description}</p>
+                                        ${pet.breed}</p>
                                 <p class="text-danger">
-                                    <fmt:formatNumber value="${product.price}"/> đ
+                                    <fmt:formatNumber value="${pet.price}"/> đ
                                 </p>
-                                <form method="post" action="/addToCart/${product.id}">
+                                <form method="post" action="/addToCart/${pet.id}">
                                     <input type="hidden" name="quantity" value="1">
                                     <button type="submit" class="btn border-primary d-flex justify-content-center">Thêm
                                         vào

@@ -1,7 +1,7 @@
 package com.example.ASM.services;
 
 import com.example.ASM.models.Product;
-import com.example.ASM.reponsitorys.ProductRepository;
+import com.example.ASM.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

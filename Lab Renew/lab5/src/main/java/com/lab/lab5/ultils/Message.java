@@ -1,5 +1,8 @@
 package com.lab.lab5.ultils;
 
+import lombok.Getter;
+
+@Getter
 public enum Message {
     SUCCESS_CREATE("Create success!"),
     SUCCESS_UPDATE("Update success!"),
@@ -15,7 +18,4 @@ public enum Message {
         this.text = text;
     }
 
-    public String getText() {
-        return text;
-    }
 }
