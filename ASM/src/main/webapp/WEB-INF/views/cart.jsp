@@ -19,48 +19,81 @@
         </nav>
     </div>
     <form:errors path="quantity" class="form-text text-danger"/>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Stt</th>
-            <th scope="col">Hình</th>
-            <th scope="col">Tên</th>
-            <th scope="col">Chủng loại</th>
-            <th scope="col">Loài</th>
-            <th scope="col">Mã</th>
-            <th scope="col">Số lượng</th>
-            <th scope="col">Giá tiền</th>
-            <th scope="col">Tổng tiền</th>
-            <th scope="col">Sửa</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${cartItems}" var="item" varStatus="status">
-            <tr>
-                <th scope="row">${status.index + 1}</th>
-                <td>
-                    <img src="${pageContext.request.contextPath}/images/${item.thumbnail}" width="100px" height="100px"
-                         alt="">
-                </td>
-                <td>${item.name}</td>
-                <td>${item.type}</td>
-                <td>${item.specie}</td>
-                <td>${item.code}</td>
-                <td>
-                    <input type="number" id="${item.id}" name="${item.quantity}" onchange="updateQty('${item.id}')"
-                           class="quantityInput" value="${item.quantity}" min="1">
-                </td>
-                <td><fmt:formatNumber value="${item.price}"/>đ</td>
-                <td id="total_${status.index}"><fmt:formatNumber value="${item.price * item.quantity}"/>đ</td>
-                <td>
-                    <a href="/remove/${item.id}" class="btn btn-danger">Xóa</a>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-8 rounded-start border border-dark">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>Giỏ hàng</h1>
+                <div>Giỏ hàng của bạn đang có ${cartItems.size()} sản phẩm</div>
+            </div>
+            <hr>
+            <table class="table table-hover">
+                <thead>
+                </thead>
+                <tbody>
+                <c:forEach items="${cartItems}" var="item" varStatus="status">
+                    <tr class="text-center" >
+                        <td>
+                            <img src="${pageContext.request.contextPath}/images/${item.thumbnail}" width="75px"
+                                 height="75px"
+                                 alt="">
+                        </td>
+                        <td>
+                            <label class="fs-3"> ${item.name}</label>
+                            <br>
+                            <label> ${item.id}</label>
+                        </td>
+                        <td>${item.type}</td>
+                        <td><fmt:formatNumber value="${item.price}"/>đ</td>
+                        <td>
+                            <input type="number" id="${item.id}" name="${item.quantity}"
+                                   onchange="updateQty('${item.id}')"
+                                   class="quantityInput w-50" value="${item.quantity}" min="1">
+                        </td>
+                        <td id="total_${status.index}" class="text-danger"><fmt:formatNumber value="${item.price * item.quantity}"/>đ</td>
+                        <td class="fs-3 ">
+                            <a href="/remove/${item.id}" class="text-dark"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4 bg-dark rounded-end text-light">
+            <h1 class="mt-1">Thanh Toán</h1>
+            <hr>
+            <div class="d-flex justify-content-between mb-3">
+                <label>${cartItems.size()} sản phẩm</label>
+                <label><fmt:formatNumber value="${totalAmount}"/>đ</label>
+            </div>
+            <label class="mb-3">
+                <span class="fs-4">Phương thức thanh toán</span>
+                <select data-mdb-select-init class="w-100">
+                    <option value="COD">Thanh toán khi nhận hàng</option>
+                    <option value="Paypal">Thanh toán Paypal</option>
+                </select>
+            </label>
+            <label class="w-100 mb-3">
+                <span class="fs-4">Mã giảm giá</span>
+                <br>
+                <input type="text" placeholder="Nhập mã giảm giá" >
+            </label>
+            <div class="d-flex justify-content-between mb-3">
+                <label class="fs-3">Tổng tiền: </label>
+                <label><fmt:formatNumber value="${totalAmount}"/>đ</label>
+            </div>
+            <a href="/payment" class="btn btn-primary w-100">Thanh toán</a>
+        </div>
+    </div>
+
 </div>
 <script>
+    $(document).ready(function() {
+        const errorMessage = "<c:out value='${errorMessage}'/>";
+        if (errorMessage) {
+            console.log(errorMessage);
+        }
+    });
+
     function updateQty(id) {
         const newQuantity = document.getElementById(id).value;
         console.log(newQuantity)
@@ -82,7 +115,7 @@
                         console.error('Lỗi cập nhật số lượng');
                     }
                 });
-        }else{
+        } else {
             alert("Số lượng phải lớn hơn 0 và nhỏ hơn hoặc bằng 100");
             document.getElementById(id).value = 1;
             location.reload();

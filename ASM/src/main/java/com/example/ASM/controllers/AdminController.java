@@ -1,8 +1,9 @@
 package com.example.ASM.controllers;
 
-import com.example.ASM.dto.ProductDto;
-import com.example.ASM.models.Product;
-import com.example.ASM.repositories.ProductRepository;
+import com.example.ASM.models.Pet;
+import com.example.ASM.models.PetCategory;
+import com.example.ASM.services.PetCategoryService;
+import com.example.ASM.services.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,86 +15,92 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/admin/add-products")
+@RequestMapping("/admin")
 public class AdminController {
     private final String path = "C:\\Java 5\\ASM\\src\\main\\resources\\static\\images\\";
 
     @Autowired
-    private ProductRepository productRepository;
+    private PetService petService;
 
-    @GetMapping("/")
-    public String addProducts(Model model, @ModelAttribute("product") Product product) {
-        model.addAttribute("products", productRepository.findAll());
+    @Autowired
+    private PetCategoryService petCategoryService;
+
+    @RequestMapping("")
+    public String indexAdmin(Model model) {
+        model.addAttribute("page", "admin-dashboard.jsp");
+        return "admin-page";
+    }
+
+    @GetMapping("/add-product")
+    public String addProducts(Model model, @ModelAttribute("pet") Pet pet) {
+        model.addAttribute("pets", petService.findAllPet());
         model.addAttribute("page", "admin-add-products.jsp");
         return "admin-page";
     }
 
-    @PostMapping("/save")
-    public String save(@Validated @ModelAttribute("product") ProductDto productDto,
-                       BindingResult bindingResult, Model model) throws IOException {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("page", "admin-add-products.jsp");
-            return "admin-page";
-        }
+    @RequestMapping("/add-product/save")
+    public String save(@ModelAttribute("pet") Pet newPet,
+                       Model model, @RequestParam("photo-file") MultipartFile photoFile) throws IOException {
 
-        Product product = new Product();
 
-        if (productDto.getId() != null) {
-            product = productRepository.findById(productDto.getId()).orElse(null);
-            if (product == null) {
-                return "redirect:/admin/add-products/";
-            }
-        }
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        product.setQuantity(productDto.getQuantity());
-        product.setType(productDto.getType());
-        product.setDescription(productDto.getDescription());
+        String petCategoryName = newPet.getCategory().getName();
+        Pet pet = new Pet();
 
-        MultipartFile photoFile = productDto.getThumbnail();
+        Optional<PetCategory> petCategory = petCategoryService.getPetCategoryByName(petCategoryName);
+        petCategory.ifPresent(newPet::setCategory);
+        newPet.setId(UUID.randomUUID());
 
+        String fileName = null;
         if (!photoFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(photoFile.getOriginalFilename());
-            File file = new File(path + fileName);
-            if (!file.exists()) {
-                file.mkdirs();
+            fileName = photoFile.getOriginalFilename();
+            String filePath = path + File.separator + fileName;
+
+            File parentDir = new File(path);
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
             }
-            photoFile.transferTo(file);
-            product.setThumbnail(fileName);
+            photoFile.transferTo(new File(filePath));
         }
-
-        productRepository.save(product);
-        model.addAttribute("message", "Thêm sản phẩm thành công");
-        return "redirect:/admin/add-products/";
-    }
-
-    @RequestMapping("/remove/{id}")
-    public String delete(@PathVariable("id") UUID id, Model model) {
-        productRepository.deleteById(id);
-        return "redirect:/admin/add-products/";
-    }
-
-    @GetMapping("/edit/{id}")
-    public String editProduct(@PathVariable("id") UUID id, Model model, @ModelAttribute("product") Product product) {
-        Product existingProduct = productRepository.findById(id).orElse(null);
-        if (existingProduct != null) {
-            model.addAttribute("product", existingProduct);
+        if (newPet.getImage() != null) {
+            pet.setImage(pet.getImage());
         } else {
-            return "redirect:/admin/add-products/";
+            pet.setImage(fileName);
         }
-        model.addAttribute("products", productRepository.findAll());
+
+        petService.savePet(newPet);
+        return "redirect:/admin/add-product";
+    }
+
+
+    @RequestMapping("/add-product/remove/{id}")
+    public String delete(@PathVariable("id") UUID id, Model model) {
+        System.out.println("ddd");
+        petService.deleteById(id);
+        return "redirect:/admin/add-product";
+    }
+
+    @GetMapping("/add-product/edit/{id}")
+    public String editProduct(@PathVariable("id") UUID id, Model model, @ModelAttribute("pet") Pet pet) {
+        Pet existingProduct = petService.findById(id).orElse(null);
+        if (existingProduct != null) {
+            model.addAttribute("pet", existingProduct);
+        } else {
+            return "redirect:/admin/add-product";
+        }
+        model.addAttribute("pets", petService.findAllPet());
         model.addAttribute("page", "admin-add-products.jsp");
         return "admin-page";
     }
 
-    @GetMapping("/search")
-    public String searchProducts(@RequestParam("name-product") String name, Model model, @ModelAttribute("product") Product product) {
-        Product searchResults = productRepository.findByNameContainingIgnoreCase(name);
-        model.addAttribute("product", searchResults);
-        model.addAttribute("products", productRepository.findAll());
+    @GetMapping("/add-product/search")
+    public String searchProducts(@RequestParam("name-product") String name, Model model, @ModelAttribute("pet") Pet pet) {
+        Pet searchResults = petService.findByNameContainingIgnoreCase(name);
+        model.addAttribute("pet", searchResults);
+        model.addAttribute("pets", petService.findAllPet());
         model.addAttribute("page", "admin-add-products.jsp");
         return "admin-page";
     }

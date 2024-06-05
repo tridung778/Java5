@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
@@ -19,7 +21,7 @@ public class OrderDetail extends BaseEntity {
     private Order order;
 
     @Column(nullable = false)
-    private Integer productId; // You might want to change this to a specific product type later
+    private UUID productId;
 
     @Column(nullable = false)
     private Integer quantity;
@@ -27,5 +29,4 @@ public class OrderDetail extends BaseEntity {
     @Column(nullable = false)
     private Double price;
 
-    // Getters and setters
 }

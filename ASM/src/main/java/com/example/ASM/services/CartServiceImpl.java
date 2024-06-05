@@ -1,9 +1,11 @@
 package com.example.ASM.services;
 
 import com.example.ASM.dto.CartDto;
+import com.example.ASM.models.User;
 import com.example.ASM.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,17 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartDto> findAll() {
         return cartRepository.findAll();
+    }
+
+    @Override
+    public List<CartDto> findAllByUser(User user) {
+        return cartRepository.findAllByUser(user);
+    }
+
+    @Override
+    @Transactional
+    public void removeAllByUser(User user) {
+        cartRepository.deleteByUser(user);
     }
 
     @Override

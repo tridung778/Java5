@@ -1,5 +1,5 @@
 :root {
-    --main-bg-color: #0F0F0F;
+    --main-bg-color: #FFFFFF;
     --second-bg-color: #141414;
     --main-text-color: #FFFFFF;
     --second-text-color: #5b5b5b;
@@ -36,7 +36,7 @@
 
 #wrapper {
     overflow-x: hidden;
-    background-color: #0F0F0F;
+    background-color: #dedede;
 }
 
 #sidebar-wrapper {

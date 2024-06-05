@@ -1,25 +1,29 @@
 package com.example.ASM.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.ASM.models.BaseEntity;
+import com.example.ASM.models.User;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartDto {
-    @Id
-    private UUID id;
-    private int stt;
+@Entity
+@Table(name = "cartDto")
+public class CartDto extends BaseEntity {
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private String thumbnail;
     private String name;
     private String type;
@@ -28,15 +32,4 @@ public class CartDto {
     @Max(100)
     @Min(0)
     private int quantity;
-    private String code;
-
-    public CartDto(String code, String thumbnail, String name, String type, String specie, double price, int quantity) {
-        this.thumbnail = thumbnail;
-        this.name = name;
-        this.type = type;
-        this.specie = specie;
-        this.price = price;
-        this.quantity = quantity;
-        this.code = code;
-    }
 }

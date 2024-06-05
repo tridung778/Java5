@@ -12,7 +12,7 @@
             <div class="col-lg-4 col-sm-12 col-xs-12">
                 <div class="address-box clearfix">
                     <div class="add-icon">
-                        <img src="Img/footer-icon-01.png" alt=""/>
+                        <img src="https://i.pinimg.com/564x/4e/dc/b4/4edcb460a940ff726549077935f57168.jpg" alt=""/>
                     </div>
                     <div class="add-content">
                         <h5>Address</h5>
@@ -24,7 +24,7 @@
             <div class="col-lg-4 col-sm-12 col-xs-12">
                 <div class="address-box clearfix">
                     <div class="add-icon">
-                        <img src="Img/footer-icon-02.png" alt=""/>
+                        <img src="https://i.pinimg.com/564x/11/21/2a/11212a256a6941127c355766b0656913.jpg" alt=""/>
                     </div>
                     <div class="add-content">
                         <h5>Phone</h5>
@@ -36,7 +36,7 @@
             <div class="col-lg-4 col-sm-12 col-xs-12">
                 <div class="address-box clearfix">
                     <div class="add-icon">
-                        <img src="Img/footer-icon-03.png" alt=""/>
+                        <img src="https://cdn.pixabay.com/photo/2013/04/01/21/31/mail-99217_960_720.png" alt=""/>
                     </div>
                     <div class="add-content">
                         <h5>Email</h5>

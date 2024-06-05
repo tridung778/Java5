@@ -5,6 +5,9 @@ import com.example.ASM.repositories.PetCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class PetCategoryServiceImpl implements PetCategoryService {
 
@@ -17,8 +20,9 @@ public class PetCategoryServiceImpl implements PetCategoryService {
     }
 
     @Override
-    public PetCategory getPetCategoryByName(String s) {
+    public Optional<PetCategory> getPetCategoryByName(String s) {
         return petCategoryRepository.getPetCategoryByName(s);
     }
+
 
 }

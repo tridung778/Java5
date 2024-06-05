@@ -1,6 +1,7 @@
 package com.example.ASM.services;
 
 import com.example.ASM.dto.CartDto;
+import com.example.ASM.models.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +17,7 @@ public interface CartService {
 
     void deleteById(UUID id);
 
+    List<CartDto> findAllByUser(User user);
+
+    void removeAllByUser(User user);
 }

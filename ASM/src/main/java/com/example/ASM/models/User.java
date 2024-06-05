@@ -1,12 +1,14 @@
 package com.example.ASM.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.example.ASM.enums.PetStatus;
+import com.example.ASM.enums.Role;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.io.File;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -18,6 +20,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String username;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -26,4 +31,8 @@ public class User extends BaseEntity {
 
     private String address;
     private String phone;
+    private String photo;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
