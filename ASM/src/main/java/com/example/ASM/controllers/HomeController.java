@@ -5,12 +5,17 @@ import com.example.ASM.enums.OrderStatus;
 import com.example.ASM.models.*;
 import com.example.ASM.services.*;
 import com.example.ASM.ultis.PetFilterForm;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.ServletException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,6 +46,9 @@ public class HomeController {
 
     @Autowired
     private OrderDetailService orderDetailService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     public boolean addUserInfoToModel(Model model, Authentication authentication) {
         if (authentication != null) {
@@ -236,7 +245,7 @@ public class HomeController {
 
     @RequestMapping("/payment")
     @Transactional
-    public String payment(Model model, Authentication authentication) {
+    public String payment(Model model, Authentication authentication) throws MessagingException, ServletException, IOException {
         if (addUserInfoToModel(model, authentication)) {
             User user = userService.findByUsername(authentication.getName());
             if (user.getAddress() == null || user.getAddress().isEmpty()) {
@@ -271,6 +280,7 @@ public class HomeController {
             cartService.removeAllByUser(user);
             model.addAttribute("user", user);
             model.addAttribute("order", order);
+            MailService.sendOrderMail(user, order, mailSender);
         }
         model.addAttribute("router", "payment.jsp");
         return "index";

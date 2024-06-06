@@ -1,6 +1,8 @@
 package com.example.ASM.controllers;
 
 import com.example.ASM.configs.SecurityConfig;
+import com.example.ASM.dto.Github;
+import com.example.ASM.dto.Google;
 import com.example.ASM.enums.Role;
 import com.example.ASM.models.User;
 import com.example.ASM.services.CartService;
@@ -9,10 +11,12 @@ import com.example.ASM.services.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
+import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -80,7 +85,7 @@ public class AuthController {
         user.setRole(newUser.getRole());
         user.setPassword(newUser.getPassword());
         if (newUser.getPhoto() != null) {
-            user.setPhoto(user.getPhoto());
+            user.setPhoto("/images/" + user.getPhoto());
         } else {
             user.setPhoto(fileName);
         }
@@ -151,4 +156,52 @@ public class AuthController {
         model.addAttribute("error", "Liên kết xác thực không hợp lệ hoặc đã hết hạn.");
         return "error"; // Hiển thị trang lỗi
     }
+
+    @GetMapping("/secured")
+    public String securedGithub(Authentication authentication) {
+        Github github = new Github();
+        User user = new User();
+        Google google = new Google();
+        if (authentication != null && authentication.getPrincipal() instanceof DefaultOAuth2User oauth2User) {
+            Map<String, Object> attributes = oauth2User.getAttributes();
+            if (attributes.toString().contains("github")) {
+                github.setUsername(attributes.get("id").toString());
+                github.setName((String) (attributes.get("name")));
+                github.setAvatarUrl((String) attributes.get("avatar_url"));
+                User userOptional = userService.findByUsername(github.getUsername());
+                if (userOptional == null) {
+                    user.setId(UUID.randomUUID());
+                    user.setUsername(github.getUsername());
+                    user.setPassword(SecurityConfig.encode(String.valueOf(UUID.randomUUID())));
+                    user.setEmail(null);
+                    user.setName(github.getName());
+                    user.setPhone(null);
+                    user.setAddress(null);
+                    user.setRole(Role.USER);
+                    user.setPhoto(github.getAvatarUrl());
+                    userService.register(user);
+                }
+            } else if (attributes.toString().contains("google")) {
+                google.setEmail((String) attributes.get("email"));
+                google.setName((String) attributes.get("name"));
+                google.setPicture((String) attributes.get("picture"));
+                google.setUsername((String) attributes.get("sub"));
+                User userOptional = userService.findByUsername(google.getUsername());
+                if (userOptional == null) {
+                    user.setId(UUID.randomUUID());
+                    user.setUsername(google.getUsername());
+                    user.setPassword(SecurityConfig.encode(String.valueOf(UUID.randomUUID())));
+                    user.setEmail(google.getEmail());
+                    user.setName(google.getName());
+                    user.setPhone(null);
+                    user.setAddress(null);
+                    user.setRole(Role.USER);
+                    user.setPhoto(google.getPicture());
+                    userService.register(user);
+                }
+            }
+        }
+        return "redirect:/";
+    }
+
 }

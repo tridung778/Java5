@@ -69,7 +69,7 @@
                                          style="width: 2.5rem;height: 2.5rem">
                                 </c:when>
                                 <c:otherwise>
-                                    <img class="rounded-circle" src="/images/${userInfo.photo}" alt="Avatar"
+                                    <img class="rounded-circle" src="${userInfo.photo}" alt="Avatar"
                                          style="width: 2.5rem;height: 2.5rem">
                                 </c:otherwise>
                             </c:choose>

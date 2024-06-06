@@ -35,13 +35,18 @@
                             <input type="password" class="form-control" id="password" name="password" required/>
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-success">Login</button>
                         </div>
                     </form>
+                    <div class="d-flex justify-content-between px-5">
+                        <a href="/oauth2/authorization/google" class="btn btn-primary">Google</a>
+                        <a href="/oauth2/authorization/github" class="btn btn-dark">GitHub</a>
+                    </div>
+
                 </div>
                 <div class="card-footer text-center">
                     <a href="/" class="btn btn-secondary">Back to Home</a>
-                    <a href="/register" class="btn btn-success">Register</a>
+                    <a href="/register" class="btn btn-warning">Register</a>
                 </div>
             </div>
         </div>

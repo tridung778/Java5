@@ -1,5 +1,3 @@
-<%@ page import="com.fasterxml.jackson.databind.DatabindContext" %>
-<%@ page import="org.springframework.ui.Model" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--
@@ -15,7 +13,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/"><i class="fa fa-house"></i></a></li>
-                <li class="breadcrumb-item active" aria-current="page">${userInfo.username}</li>
+                <li class="breadcrumb-item active" aria-current="page">${userInfo.name}</li>
             </ol>
         </nav>
     </div>
@@ -36,7 +34,7 @@
                                      style="width: 15rem;height: 15rem">
                             </c:when>
                             <c:otherwise>
-                                <img class="rounded-circle" src="/images/${userInfo.photo}" alt="Avatar"
+                                <img class="rounded-circle" src="${userInfo.photo}" alt="Avatar"
                                      style="width: 15rem;height: 15rem">
                             </c:otherwise>
                         </c:choose>
@@ -62,7 +60,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Tên đăng nhập</label>
-                        <form:input path="username" type="text" class="form-control" id="exampleInputEmail1"
+                        <form:input path="username" type="text" readonly="true" class="form-control" id="exampleInputEmail1"
                                     aria-describedby="emailHelp"/>
                     </div>
                     <div class="mb-3">

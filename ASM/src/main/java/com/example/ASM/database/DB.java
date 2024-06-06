@@ -102,7 +102,7 @@ public class DB {
             user.setEmail("user@user");
             user.setPassword(SecurityConfig.encode("123"));
             user.setRole(Role.USER);
-            user.setPhoto("cat.jpg");
+            user.setPhoto("/images/"+"cat.jpg");
             user.setPhone("0343285405");
             userService.register(user);
 
@@ -110,7 +110,7 @@ public class DB {
             admin.setId(UUID.randomUUID());
             admin.setName("Dung dep rai");
             admin.setUsername("admin");
-            admin.setEmail("admin@admin");
+            admin.setEmail("duongtridung07@gmail.com");
             admin.setPassword(SecurityConfig.encode("123"));
             admin.setRole(Role.ADMIN);
             admin.setPhone("0556285405");
