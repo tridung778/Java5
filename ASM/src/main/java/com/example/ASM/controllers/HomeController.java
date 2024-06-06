@@ -239,7 +239,13 @@ public class HomeController {
     public String payment(Model model, Authentication authentication) {
         if (addUserInfoToModel(model, authentication)) {
             User user = userService.findByUsername(authentication.getName());
-
+            if (user.getAddress() == null || user.getAddress().isEmpty()) {
+                model.addAttribute("messageInfo", "Vui lòng thêm địa chỉ");
+                return "forward:/user-page";
+            }else if(user.getPhone() == null || user.getPhone().isEmpty()) {
+                model.addAttribute("messageInfo", "Vui được thêm sdt");
+                return "forward:/user-page";
+            }
             UUID orderId = UUID.randomUUID();
             Order order = new Order();
             order.setUser(user);

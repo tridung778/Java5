@@ -20,7 +20,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false, unique = true)
@@ -30,6 +30,7 @@ public class User extends BaseEntity {
     private String password;
 
     private String address;
+    @Column(unique = true)
     private String phone;
     private String photo;
 

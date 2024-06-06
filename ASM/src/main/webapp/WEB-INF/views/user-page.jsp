@@ -1,3 +1,5 @@
+<%@ page import="com.fasterxml.jackson.databind.DatabindContext" %>
+<%@ page import="org.springframework.ui.Model" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--
@@ -82,9 +84,15 @@
             </div>
             <div class="mt-3">
                 <button type="submit" formaction="/logout" class="btn btn-danger float-end ">Đăng xuất</button>
-                <button type="submit" class="btn btn-success float-end mx-3" >Save</button>
+                <button type="submit" class="btn btn-success float-end mx-3">Save</button>
                 <button type="submit" formaction="/history" class="btn btn-warning float-end ">Lịch sử mua hàng</button>
             </div>
         </form:form>
     </div>
 </div>
+<script>
+    const message = '${messageInfo}';
+    if (message != '') {
+        alert(message)
+    }
+</script>

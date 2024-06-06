@@ -103,6 +103,7 @@ public class DB {
             user.setPassword(SecurityConfig.encode("123"));
             user.setRole(Role.USER);
             user.setPhoto("cat.jpg");
+            user.setPhone("0343285405");
             userService.register(user);
 
             User admin = new User();
@@ -112,6 +113,7 @@ public class DB {
             admin.setEmail("admin@admin");
             admin.setPassword(SecurityConfig.encode("123"));
             admin.setRole(Role.ADMIN);
+            admin.setPhone("0556285405");
             userService.register(admin);
         };
     }

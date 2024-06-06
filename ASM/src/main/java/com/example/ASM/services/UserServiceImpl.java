@@ -13,6 +13,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Override
     public void register(User user) {
         userRepository.save(user);
@@ -26,6 +27,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(UUID id) {
         return userRepository.findUserById(id);
+    }
+
+    @Override
+    public boolean isDuplicateUser(User user) {
+        return findByUsername(user.getUsername()) != null || userRepository.findByEmail(user.getEmail()) != null;
     }
 
 }

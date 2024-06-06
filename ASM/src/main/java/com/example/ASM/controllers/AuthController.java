@@ -6,7 +6,12 @@ import com.example.ASM.models.User;
 import com.example.ASM.services.CartService;
 import com.example.ASM.services.UserService;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +30,9 @@ public class AuthController {
 
     @Autowired
     private final UserService userService;
+
+    @Autowired
+    JavaMailSender mailSender;
 
     @Autowired
     private CartService cartService;
@@ -88,8 +96,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String handleRegister(@ModelAttribute("user") User newUser) {
-        // Xử lý logic đăng ký
+    public String handleRegister(@ModelAttribute("user") User newUser, HttpSession session, Model model) throws MessagingException {
+        // Tạo người dùng mới nhưng chưa lưu vào cơ sở dữ liệu
         User user = new User();
         user.setId(UUID.randomUUID());
         user.setUsername(newUser.getUsername());
@@ -100,7 +108,47 @@ public class AuthController {
         user.setAddress(null);
         user.setRole(Role.USER);
         user.setPhoto(null);
-        userService.register(user);
-        return "redirect:/login";
+
+        // Kiểm tra trùng lặp
+        if (userService.isDuplicateUser(user)) {
+            model.addAttribute("error", "Tên người dùng, email hoặc số điện thoại đã tồn tại.");
+            return "error";
+        }
+
+        // Lưu người dùng vào session
+        session.setAttribute("pendingUser", user);
+
+        // Gửi email xác thực
+        sendVerificationEmail(user);
+
+        model.addAttribute("message", "Vui lòng kiểm tra email để xác thực tài khoản.");
+        return "redirect:/register";
+    }
+
+    private void sendVerificationEmail(User user) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+        helper.setTo(user.getEmail());
+        helper.setSubject("Xác nhận email");
+        String htmlContent = "<html><body>"
+                + "<p>Mail của bạn đã được gửi đi. Vui lòng nhấp vào liên kết sau để xác thực tài khoản:</p>"
+                + "<a href='http://localhost:8080/auth-mail?id=" + user.getId() + "'>Đây là liên kết</a>"
+                + "</body></html>";
+        helper.setText(htmlContent, true);
+        mailSender.send(message);
+    }
+
+    @GetMapping("/auth-mail")
+    public String authMail(@RequestParam("id") UUID id, HttpSession session, Model model) {
+        // Lấy người dùng từ session
+        User user = (User) session.getAttribute("pendingUser");
+        if (user != null && user.getId().equals(id)) {
+            userService.register(user); // Lưu người dùng vào cơ sở dữ liệu
+            session.removeAttribute("pendingUser"); // Xóa người dùng khỏi session
+            model.addAttribute("message", "Xác thực email thành công! Bạn có thể đăng nhập.");
+            return "redirect:/login";
+        }
+        model.addAttribute("error", "Liên kết xác thực không hợp lệ hoặc đã hết hạn.");
+        return "error"; // Hiển thị trang lỗi
     }
 }

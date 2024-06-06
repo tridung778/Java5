@@ -11,4 +11,6 @@ public interface UserService {
     User findByUsername(String userName);
 
     User findUserById(UUID id);
+
+    boolean isDuplicateUser(User user);
 }
